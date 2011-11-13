@@ -1,0 +1,28 @@
+ActiveBeans - Distributed Task Queue for Ruby applications
+
+How it should work:
+
+class User < ActiveRecord::Base
+  def statistics
+    # .. do some dirty job
+  end
+end
+
+class UsersController < Application
+  def show
+    @user = User.find(params[:id])
+    @statistics = @user.async_statistics
+  end
+end
+
+Method remote_statistics will run method @user.statistics outside of webserver on special worker.
+No need to write special workers, workers are just your application with their unchanged models.
+
+Protocol
+
+ActiveBeans will send messages to workers. Messages are JSON encoded strings.
+Messages can be Request and Response.
+Request contains all information how to create instance of object and run appropriate method of this object.
+Response is just data returned from requested object.
+
+
