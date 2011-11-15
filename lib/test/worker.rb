@@ -12,17 +12,18 @@ class WorkerTest < Test::Unit::TestCase
 		loop do
 		  job = beanstalk.reserve
 		  job.delete
-		  raw_request = JSON.load(job.body)
+		  raw_req = JSON.load(job.body)
 		  puts "Recieved JobID #{job.id}"
-		  p raw_request
+		  p raw_req
 
-		  request = ActiveBeans::Request.new(raw_request)
+		  response = ActiveBeans::Response.from_request(raw_req, :job_id => job.id, :server => job.server)
+		  #new(Kernel.const_get(raw_req["c"]), raw_req["m"], false, raw_req[:args])
 
-		  response = Beanstalk::Connection.new(job.server)
-		  response.use("responses#{job.id}")
+		  reply = Beanstalk::Connection.new(job.server)
+		  reply.use("responses#{job.id}")
 		  puts "Sending response back to #{job.server}"
-		  p response.put(request.perform)
-		  response.close
+		  p reply.put(response.active_beans_response_perform)
+		  reply.close
 
 		  job.delete
 		end

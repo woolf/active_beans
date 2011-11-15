@@ -19,7 +19,7 @@ class QueueTest < Test::Unit::TestCase
   end
 
   def test_should_get_class_method_results
-    response = ActiveBeans::Queue.perform(ActiveBeans::Request.new(["User", "full_name"]))
+    response = ActiveBeans::Queue.perform(ActiveBeans::Request.new(User, "full_name", false))
     assert(response == "John Doe", "Response should be 'John Doe' but recieved '#{response.inspect}'")
   end
 end

@@ -25,5 +25,7 @@ No need to write special workers, workers are just your application with their u
 ActiveBeans will send messages to workers. Messages are JSON encoded strings.
 Messages can be Request and Response.
 Request contains all information how to create instance of object and run appropriate method of this object.
-Response is just data returned from requested object.
+{:c => "Person", :m => "full_name", :cm => true, :args => {}, :attrs => {}}
 
+Response is just data returned from requested object.
+{:body => "John Doe"}

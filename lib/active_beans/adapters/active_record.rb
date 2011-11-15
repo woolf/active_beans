@@ -9,16 +9,14 @@ module ActiveBeans
 	    end
 
 		  protected
-		  #def active_beans_remote_method method, *args
-		  #	puts "active_beans_remote_method"
-		  #	self.send(method.to_sym, *args)
-		  #end
 
+		  # Method should return sync or async Response
 			def method_missing_with_active_beans_remote_method(method, *args, &block)
 				#puts "class method_missing_with_active_beans_remote_method"
-				if method.to_s =~ /^a?sync_(.+)$/ && self.respond_to?($1)
+				if method.to_s =~ /^(a?sync)_(.+)$/ && self.respond_to?($2)
 					#active_beans_remote_method($1, *args)
-					self.send($1.to_sym, *args)
+					#self.send($1.to_sym, *args)
+					ActiveBeans::Response.new(ActiveBeans::Request.new(self, $2, $1 == "async", *args))
 				else
   				method_missing_without_active_beans_remote_method(method, *args, &block)
 				end
