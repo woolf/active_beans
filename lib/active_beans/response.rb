@@ -7,6 +7,7 @@ class ActiveBeans::Response
     @active_beans_queue_job_id = job[:job_id]
     @active_beans_queue_server = job[:server]
 		@active_beans_request = request
+    active_beans_response_perform
 	end
 
   # {"args"=>nil, "attrs"=>{}, "m"=>"full_method", "c"=>"User", "cm"=>true}
@@ -23,11 +24,23 @@ class ActiveBeans::Response
   end
 
   def == comparison_object
-    comparison_object == @proxy
+    # unless active_beans_response_ready?
+    #   raise StandardError, "ActiveBeans No Respond"
+    # end
+
+    comparison_object == @proxy["payload"]
+  end
+
+  def inspect
+    @proxy["payload"]
   end
 
   def method_missing method, *args, &block
-  	@proxy.send method, *args
+    # unless active_beans_response_ready?
+    #   raise StandardError, "ActiveBeans No Respond"
+    # end
+
+  	@proxy["payload"].send method, *args
   end
 
   def methods
@@ -38,12 +51,26 @@ class ActiveBeans::Response
     end
   end
 
+  def is_a? const
+    @proxy["payload"].is_a? const
+  end
+
+  def to_s
+    @proxy["payload"].to_s
+  end
+
   def active_beans_response_perform
     if @active_beans_request.async?
       raise StandardError, "Not implemented"
     else
       puts "response.new got job #{@active_beans_queue_job_id}"
-      @proxy = ActiveBeans::Queue.retrieve(@active_beans_queue_job_id, @active_beans_queue_server)["body"]
+      @proxy = ActiveBeans::Queue.retrieve(@active_beans_queue_job_id, @active_beans_queue_server)
+      if @proxy["error"]
+        raise Kernel.const_get(@proxy["error"]["ex"]), @proxy["error"]["m"]
+      end
+      if @proxy["c"] == "Class"
+        @proxy["payload"] = Kernel.const_get(@proxy["payload"])
+      end
     end
   end
 

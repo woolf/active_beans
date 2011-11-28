@@ -5,7 +5,6 @@ require 'active_record'
 require 'guard'
 require 'guard/guard'
 
-
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $:.unshift(File.dirname(__FILE__))
 
@@ -40,4 +39,16 @@ class User < ActiveRecord::Base
   def self.full_name
     "John Doe"
   end
+
+  def self.hello str
+    "Hello #{str}"
+  end
+
+  def self.join str1, str2
+    "#{str1} #{str2}"
+  end
 end
+
+u = User.new(:first_name => "Vasya")
+p u.to_json
+p u.attributes.to_json

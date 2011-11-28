@@ -16,15 +16,24 @@ class WorkerTest < Test::Unit::TestCase
 		  puts "Recieved JobID #{job.id}"
 		  p raw_req
 
-		  response = ActiveBeans::Response.from_request(raw_req, :job_id => job.id, :server => job.server)
+		  #response = ActiveBeans::Response.from_request(raw_req, :job_id => job.id, :server => job.server)
 		  #new(Kernel.const_get(raw_req["c"]), raw_req["m"], false, raw_req[:args])
+		  request = ActiveBeans::Request.new(Kernel.const_get(raw_req["c"]), raw_req["m"], false, raw_req["args"])
 
 		  reply = Beanstalk::Connection.new(job.server)
 		  reply.use("responses#{job.id}")
-		  puts "Sending response back to #{job.server}"
-		  p reply.put(response.active_beans_response_perform)
-		  reply.close
 
+		  result = nil
+		  begin
+		  	result = request.perform
+		  rescue Exception => e
+		  	puts "Exception #{e.class}, #{e.message}"
+		  	result = {:error => {:ex => e.class.to_s, :m => e.message}}.to_json
+		  end
+
+		  puts "Sending response back to #{job.server}: #{result.inspect}"
+		  p reply.put(result)
+		  reply.close
 		  job.delete
 		end
   end

@@ -16,13 +16,14 @@ class ActiveBeans::Request
   def perform
     puts "ActiveBeans::Request subject:"
     p message
-    #@subject.to_json
     if @class_method
       if @args
-        {:body => Kernel.const_get(@klass).send(@method, @args)}.to_json
+        payload = Kernel.const_get(@klass).send(@method, *@args)
       else
-        {:body => Kernel.const_get(@klass).send(@method)}.to_json
+        payload = Kernel.const_get(@klass).send(@method)
       end
+      klass = payload.class
+      {:payload => klass == Class ? payload.to_s : payload, :c => klass.to_s}.to_json
     else
       raise StandardError, "ActiveBeans Instance methods not implemented"
     end
