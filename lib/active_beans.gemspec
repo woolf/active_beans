@@ -10,11 +10,12 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = %q{TODO: ActiveBeans - Distributed Task Queue for Ruby applications}
   s.description = %q{TODO: TODO}
+  s.version    = ActiveBeans::VERSION
 
-  s.rubyforge_project = "active_beans"
+  #s.rubyforge_project = "active_beans"
 
   s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.test_files    = `git ls-files -- {lib/test}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
