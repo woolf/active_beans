@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Sergiy Volkov"]
   s.email       = ["sv@mooby.org"]
   s.homepage    = ""
-  s.summary     = %q{TODO: ActiveBeans - Distributed Task Queue for Ruby applications}
-  s.description = %q{TODO: TODO}
+  s.summary     = %q{ActiveBeans - Distributed Task Queue for Ruby applications}
+  s.description = %q{Distributed Task Queue for Ruby applications }
   s.version    = ActiveBeans::VERSION
 
   s.rubyforge_project = "active_beans"
