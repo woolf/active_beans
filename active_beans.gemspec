@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
 require "active_beans/version"
 
@@ -10,7 +9,8 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = %q{ActiveBeans - Distributed Task Queue for Ruby applications}
   s.description = %q{Distributed Task Queue for Ruby applications }
-  s.version    = ActiveBeans::VERSION
+  s.version     = ActiveBeans::VERSION
+  s.homepage    = "https://github.com/woolf/active_beans"
 
   s.rubyforge_project = "active_beans"
 
@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+  s.add_runtime_dependency "beanstalk-client"
 end
