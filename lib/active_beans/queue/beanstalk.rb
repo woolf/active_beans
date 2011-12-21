@@ -7,7 +7,7 @@ class ActiveBeans::Queue::Beanstalk
 	end
 
 	def put message
-		@beanstalk.use("requests")
+		@beanstalk.use("REQS")
 		job_id = @beanstalk.put(message, 65536, 0)
 		if @beanstalk.is_a? Beanstalk::Pool
 			last_server = @beanstalk.last_server

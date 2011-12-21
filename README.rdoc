@@ -29,3 +29,7 @@ Request contains all information how to create instance of object and run approp
 
 Response is just data returned from requested object.
 {:body => "John Doe"}
+
+Request sent from ActiveRecord and give Response object.
+Reponse sent from Worker.
+

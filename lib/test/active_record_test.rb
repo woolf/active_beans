@@ -26,16 +26,16 @@ class ActiveRecordTest < Test::Unit::TestCase
   def test_should_call_methods
     assert_equal @user.name, "John Doe"
     assert_equal @user.sync_name, "John Doe"
-    assert_equal @user.async_name, "John Doe"
+    #assert_equal @user.async_name, "John Doe"
 
     assert_equal User.full_name, "John Doe"
-    assert_equal User.async_full_name, "John Doe"
+    #assert_equal User.async_full_name, "John Doe"
     assert_equal User.sync_full_name, "John Doe"
   end
 
   def test_should_call_methods_with_arguments
     assert_equal User.hello("World"), "Hello World"
-    assert_equal User.async_hello("World"), "Hello World"
+    #assert_equal User.async_hello("World"), "Hello World"
     assert_equal User.sync_hello("World"), "Hello World"
   end
 end

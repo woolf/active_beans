@@ -36,6 +36,14 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def echo param
+    param
+  end
+
+  def self.echo_class param
+    param
+  end
+
   def self.full_name
     "John Doe"
   end
@@ -44,11 +52,13 @@ class User < ActiveRecord::Base
     "Hello #{str}"
   end
 
-  def self.join str1, str2
+  def join_object str1, str2
+    puts "str1 #{str1}"
+    puts "str2 #{str2}"
+    "#{str1} #{str2}"
+  end
+
+  def self.join_class str1, str2
     "#{str1} #{str2}"
   end
 end
-
-u = User.new(:first_name => "Vasya")
-p u.to_json
-p u.attributes.to_json

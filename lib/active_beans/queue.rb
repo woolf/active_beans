@@ -8,11 +8,11 @@ module ActiveBeans::Queue
 		end
 
 		def retrieve job_id, server = nil
-			connection.retrieve("responses#{job_id}", server)
+			connection.retrieve("RESP#{job_id}", server)
 		end
 
 		def connection
-			@connection = ActiveBeans::Queue::Beanstalk.new(:server => 'localhost:11300', :queue => "requests")
+			@connection = ActiveBeans::Queue::Beanstalk.new(:server => 'localhost:11300', :queue => "REQS")
 		end
 	end
 end

@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby -wKU
+
+require "rubygems"
+require "json"
+require File.join(File.dirname(__FILE__), "../lib/active_beans")
+
+if defined? Rails
+  require File.join(File.dirname(__FILE__), "../lib/active_beans/railtie")
+end
+
+beanstalk = Beanstalk::Connection.new(@config[:server])
+
+beanstalk.watch("REQS")
+
+loop do
+  job = beanstalk.reserve
+  #job.delete
+
+  raw_req = JSON.load(job.body)
+  puts "Get JobID #{job.id} at #{Time.now}"
+  puts "  #{raw_req.inspect}"
+
+  subject = if raw_req["cm"]
+    Kernel.const_get(raw_req["c"])
+  else
+    Kernel.const_get(raw_req["c"]).new
+  end
+
+  request = ActiveBeans::Request.new(subject, raw_req["m"], false, Marshal.load(raw_req["args"]))
+
+  reply = Beanstalk::Connection.new(job.server)
+  reply.use("RESP#{job.id}")
+
+  result = nil
+  begin
+    result = request.perform
+  rescue Exception => e
+    puts "  Exception #{e.class}, #{e.message}"
+    result = {:error => {:ex => e.class.to_s, :m => e.message}}.to_json
+  end
+
+  puts "  Sending response back to #{job.server}: #{result.inspect}"
+  reply.put(result)
+  reply.close
+  job.delete
+
+  puts
+  puts
+end
+
+
+
