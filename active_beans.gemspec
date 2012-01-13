@@ -9,7 +9,6 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = %q{ActiveBeans - Distributed Task Queue for Ruby applications}
   s.description = %q{Distributed Task Queue for Ruby applications }
-  s.version     = ActiveBeans::VERSION
   s.homepage    = "https://github.com/woolf/active_beans"
 
   s.rubyforge_project = "active_beans"
