@@ -23,4 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency "beanstalk-client"
   s.add_dependency "eventmachine"
   s.add_dependency "em-beanstalk"
+  s.add_dependency "json"
 end

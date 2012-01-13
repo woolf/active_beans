@@ -23,33 +23,33 @@ end
 
 module ActiveBeans
   class << self
-	  def configure config
-	    options.merge!(config)
-	  end
+    def configure config
+      @options = options.merge(config)
+    end
 
-	  def options
-	    @options ||= {
-	    	:server => "localhost:11300",
-	      :log => true,
-	      :timeout => 0
-	    }
-	  end
+    def options
+      @options ||= {
+        :server => "localhost:11300",
+        :log => true,
+        :timeout => 0
+      }
+    end
 
-	  def log message
-	    logger.info("[active_beans] #{message}") if logging?
-	  end
+    def log message
+      logger.info("[active_beans] #{message}") if logging?
+    end
 
-	  def logger #:nodoc:
-	    @logger ||= options[:logger] || Logger.new(STDOUT)
-	  end
+    def logger #:nodoc:
+      @logger ||= options[:logger] || Logger.new(STDOUT)
+    end
 
-	  def logger=(logger)
-	    @logger = logger
-	  end
+    def logger=(laogger)
+      @logger = logger
+    end
 
-	  def logging? #:nodoc:
-	    options[:log]
-	  end
-	end
+    def logging? #:nodoc:
+      options[:log]
+    end
+  end
 end
 

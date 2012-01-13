@@ -1,8 +1,8 @@
 class ActiveBeans::Response
-	attr_reader :active_beans_request
+  attr_reader :active_beans_request
   attr_reader :active_beans_queue_job_id
 
-	def initialize request
+  def initialize request
 
     #job = connection.put(request.message)
     #ActiveBeans::Response.new(request, job)
@@ -16,10 +16,10 @@ class ActiveBeans::Response
       last_server = connection.addr
     end
 
-		@proxy = nil
+    @proxy = nil
     @active_beans_queue_job_id = job_id
     @active_beans_queue_server = last_server
-		@active_beans_request = request
+    @active_beans_request = request
 
     ActiveBeans.log("Sent new #{request.async? ? 'a' : ''}sync request '#{request.message.to_s[0..64]}...' to #{last_server}")
     
@@ -28,7 +28,7 @@ class ActiveBeans::Response
     else
       active_beans_response_perform
     end
-	end
+  end
 
   def == comparison_object
     # unless active_beans_response_ready?
