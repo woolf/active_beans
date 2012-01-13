@@ -14,7 +14,7 @@ class ActiveBeans::Queue::Beanstalk
 		else
 			last_server = @beanstalk.addr
 		end
-		puts "put #{message} to #{@config[:queue]}@#{last_server}"
+		ActiveBeans.log("Send request '#{message.to_s[0..64]}...' to #{@config[:queue]}@#{last_server}")
     {:job_id => job_id, :server => last_server}
 	end
 
@@ -22,11 +22,10 @@ class ActiveBeans::Queue::Beanstalk
 		unless server.nil?
 			@beanstalk = Beanstalk::Connection.new(server)
 		end
-		puts "trying to retrieve #{job_id} from #{server}"
+		ActiveBeans.log("Sync retrieve #{job_id} from #{server}")
 		@beanstalk.watch(job_id)
 	  job = @beanstalk.reserve
 	  # job.class Beanstalk::Job
-	  puts "got jobid #{job.id} with body: #{job.body}"
 	  job.delete
 	  JSON.load(job.body)
 	end

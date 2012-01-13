@@ -20,8 +20,6 @@ class ActiveBeans::Request
     #   subject = Kernel.const_get(@klass).new
     # end
     puts "PERFORM"
-p @subject
-p @args
     if !@args.nil?
       payload = @subject.send(@method, *@args)
     else

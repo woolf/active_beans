@@ -1,13 +1,4 @@
 module ActiveBeans
-
-  def self.init config
-    @config = config
-  end
-
-  def self.config
-    @config
-  end
-
   def self.to_bean obj
     [obj.class.to_s, Marshal.dump(obj)].to_json
   end

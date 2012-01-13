@@ -40,7 +40,7 @@ class WorkerTest < Test::Unit::TestCase
 		  	result = {:error => {:ex => e.class.to_s, :m => e.message}}.to_json
 		  end
 
-		  puts "  Sending response back to #{job.server}: #{result.inspect}"
+		  puts "  Sending response RESP#{job.id} back to #{job.server}: #{result.inspect}"
 		  reply.put(result)
 		  reply.close
 		  job.delete
