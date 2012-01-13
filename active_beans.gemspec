@@ -3,7 +3,7 @@ require "active_beans/version"
 
 Gem::Specification.new do |s|
   s.name        = "active_beans"
-  s.version     = ActiveBeans::VERSION
+  s.version     = "0.0.1"
   s.authors     = ["Sergiy Volkov"]
   s.email       = ["sv@mooby.org"]
   s.homepage    = ""
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
-  s.add_runtime_dependency "beanstalk-client"
-  s.add_runtime_dependency "eventmachine"
+  s.add_dependency "beanstalk-client"
+  s.add_dependency "eventmachine"
+  s.add_dependency "em-beanstalk"
 end
