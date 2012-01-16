@@ -14,16 +14,10 @@ module ActiveBeans
   end
 end
 
-module ActionView
-  class TemplateRenderer < AbstractRenderer
-    def render(context, options)
-      @view = context
+module AbstractController
+  module Rendering
+    def _process_options(options)
       ActiveBeans.syncronize!
-      wrap_formats(options[:template] || options[:file]) do
-        template = determine_template(options)
-        freeze_formats(template.formats, true)
-        render_template(template, options[:layout], options[:locals])
-      end
     end
   end
 end
