@@ -3,9 +3,6 @@ class ActiveBeans::Response
   attr_reader :active_beans_queue_job_id
 
   def initialize request
-
-    #job = connection.put(request.message)
-    #ActiveBeans::Response.new(request, job)
     connection = Beanstalk::Connection.new(ActiveBeans.options[:server])
     connection.use("REQS")
     job_id = connection.put(request.message, 65536, ActiveBeans.options[:timeout])
@@ -31,9 +28,10 @@ class ActiveBeans::Response
   end
 
   def == comparison_object
-    # unless active_beans_response_ready?
-    #   raise StandardError, "ActiveBeans No Respond"
-    # end
+    unless active_beans_response_ready?
+      raise StandardError, "ActiveBeans No Respond"
+    end
+
     comparison_object == @proxy[:payload]
   end
 
@@ -70,6 +68,10 @@ class ActiveBeans::Response
   end
 
   def to_s
+    unless active_beans_response_ready?
+      raise StandardError, "ActiveBeans No Respond"
+    end
+    
     @proxy[:payload].to_s
   end
 

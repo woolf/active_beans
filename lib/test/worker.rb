@@ -11,11 +11,9 @@ class WorkerTest < Test::Unit::TestCase
 
 		loop do
 		  job = beanstalk.reserve
-		  #job.delete
 
 		  raw_req = JSON.load(job.body)
-		  puts "Get JobID #{job.id} at #{Time.now}"
-		  puts "  #{raw_req.inspect}"
+		  ActiveBeans.log("Get JobID #{job.id} #{raw_req.inspect.to_s[0..64]}")
 
 		  #response = ActiveBeans::Response.from_request(raw_req, :job_id => job.id, :server => job.server)
 		  #new(Kernel.const_get(raw_req["c"]), raw_req["m"], false, raw_req[:args])
@@ -36,17 +34,14 @@ class WorkerTest < Test::Unit::TestCase
 		  begin
 		  	result = request.perform
 		  rescue Exception => e
-		  	puts "  Exception #{e.class}, #{e.message}"
+		  	ActiveBeans.log("Exception #{e.class}, #{e.message}")
 		  	result = {:error => {:ex => e.class.to_s, :m => e.message}}.to_json
 		  end
 
-		  puts "  Sending response RESP#{job.id} back to #{job.server}: #{result.inspect}"
+		  ActiveBeans.log("Response RESP#{job.id} back to #{job.server}: #{result.inspect.to_s[0..64]}")
 		  reply.put(result)
 		  reply.close
 		  job.delete
-
-		  puts
-		  puts
 		end
   end
 

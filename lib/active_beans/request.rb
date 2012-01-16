@@ -11,15 +11,8 @@ class ActiveBeans::Request
   end
 
   def perform
-    # if @class_method
-    #   puts "  Perform Class Method"
-    #   subject = Kernel.const_get(@klass)
-    # else
-    #   puts "  Perform object Method"
-    #   # TODO initialize object properly
-    #   subject = Kernel.const_get(@klass).new
-    # end
-    puts "PERFORM"
+    ActiveBeans.log("Execute #{@subject} class #{@klass}, args #{@args.inspect.to_s[0..64]}")
+
     if !@args.nil?
       payload = @subject.send(@method, *@args)
     else
