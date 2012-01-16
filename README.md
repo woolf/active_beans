@@ -38,15 +38,15 @@ In controller:
 
 Run beanstalkd queue:
 
-	`beanstalkd &`
+	beanstalkd &
 
 Run worker intance:
 
-	`cd application_dir; active_beans_worker`
+	cd application_dir; active_beans_worker
 
 Run your application:
 
-	`cd application_dir; rails s`
+	cd application_dir; rails s
 
 And now, when you open page with action `show`, method `@user.async_statistics` performed by worker.
 Variable `@statistics` is a proxy object, and inside your views will represent actual result from worker.
