@@ -1,9 +1,13 @@
-#!/usr/bin/env ruby -wKU
+#!/usr/bin/env ruby -KU
 
 require "rubygems"
 require "active_beans"
 
-require File.join(File.dirname(__FILE__), "config.ru")
+def run app
+  ActiveBeans.log("Starting #{app.inspect} worker")
+end
+
+load File.join(Dir.pwd, "config.ru")
 
 if defined? Rails
   require "active_beans/railtie"
