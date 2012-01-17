@@ -74,6 +74,11 @@ Results from methods `@user.async_statistics` `@user.async_data_from_remote_xml_
 `@user.async_data_from_second_database` will performed asynchronously and possible you will render page in
 three times faster. Remember you can start any number of `active_beans_worker` instances, each worker works synchronously, so you need three workers for this.
 
+Samples
+-------
+
+Try to play with sample Rails application hosted here https://github.com/woolf/active_beans_rails_test
+
 TODO
 ----
 
