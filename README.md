@@ -7,9 +7,15 @@ Waiting for results from workers performed asynchronously by using `EventMachine
 Quick Start
 -----------
 
-In Gemfile:
+Install gem:
 
-	gem 'active_beans'
+	git clone git@github.com/woolf/active_beans.git
+	cd active_beans; gem build active_beans.gemspec
+	gem install active_beans-0.0.1.gem
+
+In your Rails application Gemfile:
+
+	gem 'active_beans', :git => "git@github.com/woolf/active_beans.git"
 
 Add config `active_beans.yml` in config directory:
 
