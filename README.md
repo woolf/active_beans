@@ -86,6 +86,7 @@ TODO
 * `ActiveRecord` only so far
 * Add other web frameworks like Sinatra, Ramaze etc.
 * `beanstalkd` queue only, need to investigate other queue frameworks
+* Improve protocol for sending and recieving data, change Marshal method to something more fast and efficient
 
 Problems
 --------
